@@ -1,0 +1,86 @@
+Hi Team 👋
+
+I've built a real-time leaderboard demo tool that any SolCon can use to make their Braze demos more interactive and engaging! 🎯
+
+🔥 What is it?
+A live leaderboard that updates in real-time (2-second refresh) whenever someone completes a quiz, game, or any scored activity. Think gamification, contests, training sessions, or interactive workshops.
+
+✨ The best part? Everyone gets their own isolated leaderboard!
+Each of you can run demos simultaneously without interfering with each other. Just pick a unique quiz_id and you're good to go.
+
+🎮 Perfect for demo scenarios:
+• Gamification use cases (loyalty programs, engagement contests)
+• Interactive workshops with audience participation
+• Training & onboarding with quizzes
+• Event activations with live rankings
+• Customer competitions
+
+🚀 How it works:
+1. Create a Braze Landing Page with your quiz/game
+2. Use Agent Console to calculate scores
+3. Send results via webhook to the leaderboard
+4. Share the live URL with your audience
+5. Watch scores update in real-time as people participate!
+
+📱 Features:
+✓ Real-time updates (no page refresh needed)
+✓ Top 3 highlighted with medals and special colors
+✓ Mobile responsive
+✓ Each demo has its own isolated leaderboard (via quiz_id)
+✓ Easy to clear between demos
+
+🔗 Your leaderboard URL format:
+https://tgt-vercel-braze-demo-leaderboard-braze.vercel.app/quiz/YOUR-QUIZ-ID
+
+Example:
+https://tgt-vercel-braze-demo-leaderboard-braze.vercel.app/quiz/demo-john-workshop
+
+📚 Complete setup guides:
+• Full SolCon Guide: https://github.com/Thmsglchr/vercel-braze-demo-leaderboard/blob/main/DEMO-GUIDE.md
+• Canvas Setup (copy/paste ready): Check the Canvas-Setup-Guide in the repo
+• Database migration steps: MIGRATION-GUIDE.md
+
+🛠️ Quick Start (5 minutes):
+1. Choose a unique quiz_id (e.g., "demo-yourname-q4")
+2. Create your Canvas with:
+   - Landing Page for data capture
+   - Agent Console to calculate score
+   - Webhook to: https://tgt-vercel-braze-demo-leaderboard-braze.vercel.app/api/update-score
+3. Webhook body:
+   {
+     "user_id": "{{${user_id}}}",
+     "username": "{{${first_name}}} {{${last_name}}}",
+     "score": {{canvas_entry_properties.${score}}},
+     "quiz_id": "your-quiz-id"
+   }
+4. Share your leaderboard URL with customers!
+
+🧹 Clear your leaderboard before demos:
+https://tgt-vercel-braze-demo-leaderboard-braze.vercel.app/clear
+(Enter your quiz_id to clear only YOUR leaderboard)
+
+💡 Pro Tips:
+• Pre-load 3-5 test scores before customer demos to make it look realistic
+• Show the leaderboard on a second screen during live demos to highlight real-time updates
+• Use it for workshop competitions - create team spirit!
+• Perfect for trade shows and events with live audience participation
+
+🎯 Example Use Cases I've Tested:
+• Workshop quiz competitions (team vs team)
+• Product knowledge tests for training
+• Engagement campaigns with instant gratification
+• Live event activations with real-time rankings
+
+📞 Need Help?
+• Full documentation in the GitHub repo
+• Reference Canvas: https://dashboard-02.braze.eu/engagement/canvas/692467e6401c9225edc704b0/6578c2dc0142c1004d49fd6a
+• Reference Landing Page: https://dashboard-02.braze.eu/engagement/landing_pages/69246958432ab82fe41e7329/6578c2dc0142c1004d49fd6a
+• DM me if you have questions!
+
+Feel free to clone my Canvas as a starting point or build your own. The system is designed to handle multiple SolCons running demos at the same time - just make sure your quiz_id is unique!
+
+Who wants to try it first? Would love to hear your feedback and see creative use cases you come up with! 🚀
+
+Cheers,
+Thomas
+
