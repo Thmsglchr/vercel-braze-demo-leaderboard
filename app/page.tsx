@@ -82,7 +82,7 @@ export default function Home() {
           
           {/* Title */}
           <div className="mb-6">
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-8 py-4 inline-block border border-white/20">
+            <div className="bg-white/10 backdrop-blur-sm rounded-full px-10 py-4 inline-block border border-white/20">
               <h1 className="text-4xl md:text-5xl font-bold text-white">
                 Real-time Leaderboard
               </h1>
@@ -112,18 +112,18 @@ export default function Home() {
               <div className="animate-pulse">Loading...</div>
             </div>
           ) : error ? (
-            <div className="bg-red-900/50 border-2 border-red-500 rounded-2xl p-6 text-center backdrop-blur-sm">
+            <div className="bg-red-900/50 border-2 border-red-500 rounded-full p-6 text-center backdrop-blur-sm">
               <p className="text-red-200 text-lg mb-2">❌ Error</p>
               <p className="text-red-300">{error}</p>
               <button 
                 onClick={fetchLeaderboard}
-                className="mt-4 px-6 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition-all text-white font-semibold"
+                className="mt-4 px-6 py-2 bg-red-600 hover:bg-red-700 rounded-full transition-all text-white font-semibold"
               >
                 Retry
               </button>
             </div>
           ) : leaderboard.length === 0 ? (
-            <div className="bg-white/5 border-2 border-[#FFA4FB]/30 rounded-2xl p-8 text-center backdrop-blur-sm">
+            <div className="bg-white/5 border-2 border-[#FFA4FB]/30 rounded-full p-8 text-center backdrop-blur-sm">
               <p className="text-[#FFA4FB] text-xl mb-2">
                 🎮 No scores yet
               </p>
@@ -137,7 +137,7 @@ export default function Home() {
                 <div
                   key={entry.user_id}
                   className={`
-                    backdrop-blur-sm rounded-2xl p-5 
+                    backdrop-blur-sm rounded-full p-5 
                     border-2 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl
                     ${entry.rank <= 3 
                       ? 'border-[#FFA524] bg-gradient-to-r from-[#FFA524]/20 to-[#FFA4FB]/20 shadow-lg shadow-[#FFA524]/30' 
@@ -181,9 +181,9 @@ export default function Home() {
             <div className="text-center mt-8">
               <button
                 onClick={fetchLeaderboard}
-                className="px-8 py-3 bg-gradient-to-r from-[#801ED7] to-[#300266] hover:from-[#801ED7] hover:to-[#801ED7] text-white rounded-xl font-bold transition-all hover:scale-105 shadow-lg shadow-[#801ED7]/50 border border-white/20"
+                className="px-10 py-3 bg-white hover:bg-white/90 text-[#300266] rounded-full font-bold transition-all hover:scale-105 shadow-lg"
               >
-                🔄 Refresh Now
+                Refresh Now
               </button>
             </div>
           )}
