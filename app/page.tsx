@@ -94,9 +94,9 @@ export default function Home() {
               <Image 
                 src="/braze-logo.png" 
                 alt="Powered by Braze" 
-                width={300}
-                height={100}
-                className="h-20 w-auto object-contain drop-shadow-lg"
+                width={375}
+                height={125}
+                className="h-25 w-auto object-contain drop-shadow-lg"
                 priority
               />
             </div>
@@ -112,16 +112,14 @@ export default function Home() {
           </div>
           
           <div className="flex items-center justify-center gap-2 mb-4">
-            <div className="h-1 w-12 bg-gradient-to-r from-transparent via-[#FFA524] to-transparent rounded-full"></div>
             <p className="text-[#FFA4FB] text-lg font-medium">
               Live Updates via Webhooks
             </p>
-            <div className="h-1 w-12 bg-gradient-to-r from-transparent via-[#FFA524] to-transparent rounded-full"></div>
           </div>
           
           {lastUpdate && (
             <div className="flex items-center justify-center gap-2 text-sm text-white/60 mt-4">
-              <div className="w-2 h-2 bg-[#FFA524] rounded-full animate-pulse"></div>
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
               <p>Live • Last update: {lastUpdate}</p>
             </div>
           )}
@@ -215,9 +213,9 @@ export default function Home() {
             <Image 
               src="/powered-by-braze-logo.png" 
               alt="Powered by Braze" 
-              width={200}
-              height={60}
-              className="h-12 w-auto object-contain mx-auto opacity-80 hover:opacity-100 transition-opacity"
+              width={250}
+              height={75}
+              className="h-15 w-auto object-contain mx-auto opacity-80 hover:opacity-100 transition-opacity"
             />
           </div>
         </div>
