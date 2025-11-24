@@ -212,10 +212,13 @@ export default function Home() {
           
           {/* Powered by Braze footer */}
           <div className="text-center mt-12 pb-8">
-            <div className="inline-flex items-center gap-2 bg-white/5 backdrop-blur-sm px-6 py-3 rounded-full border border-white/10">
-              <span className="text-white/60 text-sm">Powered by</span>
-              <span className="text-[#FFA524] font-bold text-lg">Braze</span>
-            </div>
+            <Image 
+              src="/powered-by-braze-logo.png" 
+              alt="Powered by Braze" 
+              width={200}
+              height={60}
+              className="h-12 w-auto object-contain mx-auto opacity-80 hover:opacity-100 transition-opacity"
+            />
           </div>
         </div>
       </div>
