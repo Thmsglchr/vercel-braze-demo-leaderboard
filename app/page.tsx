@@ -68,7 +68,8 @@ export default function Home() {
     const interval = setInterval(checkForUpdates, 2000);
     
     return () => clearInterval(interval);
-  }, [lastDbUpdate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getMedalEmoji = (rank: number) => {
     if (rank === 1) return '🥇';
