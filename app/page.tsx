@@ -140,7 +140,7 @@ export default function Home() {
               <p className="text-red-200 text-lg mb-2">❌ Error</p>
               <p className="text-red-300">{error}</p>
               <button 
-                onClick={fetchLeaderboard}
+                onClick={() => fetchLeaderboard()}
                 className="mt-4 px-6 py-2 bg-red-600 hover:bg-red-700 rounded-full transition-all text-white font-semibold"
               >
                 Retry
@@ -161,11 +161,11 @@ export default function Home() {
                 <div
                   key={entry.user_id}
                   className={`
-                    backdrop-blur-sm rounded-full p-5 
-                    border-2 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl
+                    rounded-full p-5 
+                    transition-all duration-300 hover:scale-[1.02]
                     ${entry.rank <= 3 
-                      ? 'border-[#FFA524] bg-gradient-to-r from-[#FFA524]/20 to-[#FFA4FB]/20 shadow-lg shadow-[#FFA524]/30' 
-                      : 'border-white/20 bg-white/5 hover:border-[#801ED7]/50 hover:bg-white/10'
+                      ? 'bg-white' 
+                      : 'bg-gradient-to-br from-white to-[#E6D5F6]'
                     }
                   `}
                 >
@@ -176,10 +176,10 @@ export default function Home() {
                         {getMedalEmoji(entry.rank) || `#${entry.rank}`}
                       </div>
                       <div className="flex-1">
-                        <p className="text-white text-xl font-bold truncate">
+                        <p className="text-[#300266] text-xl font-bold truncate">
                           {entry.username}
                         </p>
-                        <p className="text-white/50 text-sm">
+                        <p className="text-[#801ED7]/60 text-sm">
                           {new Date(entry.updated_at).toLocaleDateString('en-US')}
                         </p>
                       </div>
@@ -187,10 +187,10 @@ export default function Home() {
 
                     {/* Score */}
                     <div className="text-right">
-                      <p className={`text-3xl font-bold ${entry.rank <= 3 ? 'text-[#FFA524]' : 'text-[#FFA4FB]'}`}>
+                      <p className="text-[#801ED7] text-3xl font-bold">
                         {entry.score.toLocaleString('en-US')}
                       </p>
-                      <p className="text-white/50 text-sm">
+                      <p className="text-[#801ED7]/60 text-sm">
                         points
                       </p>
                     </div>
@@ -204,8 +204,8 @@ export default function Home() {
           {!loading && !error && (
             <div className="text-center mt-8">
               <button
-                onClick={fetchLeaderboard}
-                className="px-10 py-3 bg-white hover:bg-white/90 text-[#300266] rounded-full font-bold transition-all hover:scale-105 shadow-lg"
+                onClick={() => fetchLeaderboard()}
+                className="px-10 py-3 bg-white hover:bg-white/90 text-[#300266] rounded-full font-bold transition-all hover:scale-105"
               >
                 Refresh Now
               </button>
