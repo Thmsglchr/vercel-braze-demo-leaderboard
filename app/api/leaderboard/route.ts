@@ -18,15 +18,16 @@ export async function GET(request: Request) {
     const limit = parseInt(searchParams.get('limit') || '100');
 
     // Récupérer le top scores, triés par score décroissant
+    // En cas d'égalité, celui qui a atteint le score en premier est mieux classé
     const result = await sql`
       SELECT 
         user_id,
         username,
         score,
         updated_at,
-        ROW_NUMBER() OVER (ORDER BY score DESC) as rank
+        ROW_NUMBER() OVER (ORDER BY score DESC, updated_at ASC) as rank
       FROM leaderboard
-      ORDER BY score DESC
+      ORDER BY score DESC, updated_at ASC
       LIMIT ${limit}
     `;
 
