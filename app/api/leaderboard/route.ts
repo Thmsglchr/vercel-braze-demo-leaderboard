@@ -16,6 +16,7 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const limit = parseInt(searchParams.get('limit') || '100');
+    const quizId = searchParams.get('quiz_id') || 'default';
 
     // Récupérer le top scores, triés par score décroissant
     // En cas d'égalité, celui qui a atteint le score en premier est mieux classé
@@ -27,6 +28,7 @@ export async function GET(request: Request) {
         updated_at,
         ROW_NUMBER() OVER (ORDER BY score DESC, updated_at ASC) as rank
       FROM leaderboard
+      WHERE quiz_id = ${quizId}
       ORDER BY score DESC, updated_at ASC
       LIMIT ${limit}
     `;

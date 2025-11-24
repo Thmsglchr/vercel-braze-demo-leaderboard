@@ -30,24 +30,21 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { user_id, external_id, username, first_name, last_name, score } = body;
-
-    // Construire le username : accepte soit 'username' direct, soit 'first_name + last_name'
-    let finalUsername = username;
-    if (!finalUsername && (first_name || last_name)) {
-      finalUsername = `${first_name || ''} ${last_name || ''}`.trim();
-    }
+    const { user_id, external_id, username, score, quiz_id } = body;
 
     // Validation des données
-    if (!finalUsername || score === undefined || score === null) {
+    if (!username || score === undefined || score === null) {
       return NextResponse.json(
-        { error: 'Missing required fields: username (or first_name/last_name) and score are required' },
+        { error: 'Missing required fields: username and score are required' },
         { status: 400 }
       );
     }
 
     // Utiliser external_id si disponible, sinon user_id
     const userId = external_id || user_id;
+    
+    // quiz_id par défaut si non fourni
+    const quizIdentifier = quiz_id || 'default';
 
     if (!userId) {
       return NextResponse.json(
@@ -67,26 +64,27 @@ export async function POST(request: NextRequest) {
     }
 
     // Insérer ou mettre à jour le score dans la DB
-    // On utilise ON CONFLICT pour faire un UPSERT
+    // ON CONFLICT sur (user_id, quiz_id) pour permettre le même user dans plusieurs quiz
     await sql`
-      INSERT INTO leaderboard (user_id, username, score, updated_at)
-      VALUES (${userId}, ${finalUsername}, ${scoreValue}, NOW())
-      ON CONFLICT (user_id)
+      INSERT INTO leaderboard (user_id, username, score, quiz_id, updated_at)
+      VALUES (${userId}, ${username}, ${scoreValue}, ${quizIdentifier}, NOW())
+      ON CONFLICT (user_id, quiz_id)
       DO UPDATE SET 
         username = EXCLUDED.username,
         score = EXCLUDED.score,
         updated_at = NOW()
     `;
 
-    console.log(`✅ Score updated for user ${finalUsername}: ${scoreValue}`);
+    console.log(`✅ Score updated for user ${username}: ${scoreValue} (quiz: ${quizIdentifier})`);
 
     return NextResponse.json({
       success: true,
       message: 'Score updated successfully',
       data: {
         user_id: userId,
-        username: finalUsername,
-        score: scoreValue
+        username,
+        score: scoreValue,
+        quiz_id: quizIdentifier
       }
     });
 
@@ -110,9 +108,7 @@ export async function GET() {
     expectedPayload: {
       user_id: 'string',
       external_id: 'string (optional)',
-      username: 'string OR first_name + last_name',
-      first_name: 'string (optional, combined with last_name)',
-      last_name: 'string (optional, combined with first_name)',
+      username: 'string',
       score: 'number'
     }
   });

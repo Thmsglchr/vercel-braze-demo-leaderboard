@@ -10,26 +10,32 @@ export const dynamic = 'force-dynamic';
  * 
  * ⚠️ ATTENTION : Cette route supprime TOUTES les entrées !
  */
-export async function DELETE() {
+export async function DELETE(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const quizId = searchParams.get('quiz_id') || 'default';
+    
     // Compter les entrées avant suppression
     const countResult = await sql`
       SELECT COUNT(*) as count FROM leaderboard
+      WHERE quiz_id = ${quizId}
     `;
     
     const countBefore = parseInt(countResult.rows[0]?.count || '0');
 
-    // Supprimer toutes les entrées
+    // Supprimer toutes les entrées de ce quiz
     await sql`
       DELETE FROM leaderboard
+      WHERE quiz_id = ${quizId}
     `;
 
-    console.log(`🗑️ Cleared leaderboard: ${countBefore} entries deleted`);
+    console.log(`🗑️ Cleared leaderboard for quiz "${quizId}": ${countBefore} entries deleted`);
 
     return NextResponse.json({
       success: true,
-      message: 'Leaderboard cleared successfully',
-      deleted_count: countBefore
+      message: `Leaderboard for quiz "${quizId}" cleared successfully`,
+      deleted_count: countBefore,
+      quiz_id: quizId
     });
 
   } catch (error) {

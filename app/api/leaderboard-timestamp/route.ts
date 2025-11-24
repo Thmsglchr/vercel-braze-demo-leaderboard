@@ -10,12 +10,16 @@ export const revalidate = 0;
  * 
  * Endpoint: GET /api/leaderboard-timestamp
  */
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const quizId = searchParams.get('quiz_id') || 'default';
+    
     // Récupérer seulement le timestamp le plus récent (très rapide)
     const result = await sql`
       SELECT MAX(updated_at) as last_update
       FROM leaderboard
+      WHERE quiz_id = ${quizId}
       LIMIT 1
     `;
 
