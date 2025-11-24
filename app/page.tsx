@@ -16,10 +16,12 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdate, setLastUpdate] = useState<string>('');
+  const [lastDbUpdate, setLastDbUpdate] = useState<string | null>(null);
 
-  const fetchLeaderboard = async () => {
+  const fetchLeaderboard = async (silent = false) => {
     try {
-      setLoading(true);
+      if (!silent) setLoading(true);
+      
       const response = await fetch('/api/leaderboard?limit=50');
       const data = await response.json();
       
@@ -38,14 +40,35 @@ export default function Home() {
     }
   };
 
+  // Fonction ultra-légère qui check juste le timestamp
+  const checkForUpdates = async () => {
+    try {
+      const response = await fetch('/api/leaderboard-timestamp');
+      const data = await response.json();
+      
+      if (data.success && data.last_update) {
+        // Si c'est la première fois ou si le timestamp a changé
+        if (!lastDbUpdate || lastDbUpdate !== data.last_update) {
+          setLastDbUpdate(data.last_update);
+          // Fetch silencieux (sans loading spinner)
+          await fetchLeaderboard(true);
+        }
+      }
+    } catch (err) {
+      console.error('Error checking updates:', err);
+    }
+  };
+
   useEffect(() => {
+    // Premier chargement
     fetchLeaderboard();
     
-    // Auto-refresh every 5 seconds for real-time updates
-    const interval = setInterval(fetchLeaderboard, 5000);
+    // Polling intelligent : vérifie le timestamp toutes les 2 secondes
+    // Ne recharge les données QUE si le timestamp a changé (= nouveau webhook reçu)
+    const interval = setInterval(checkForUpdates, 2000);
     
     return () => clearInterval(interval);
-  }, []);
+  }, [lastDbUpdate]);
 
   const getMedalEmoji = (rank: number) => {
     if (rank === 1) return '🥇';
