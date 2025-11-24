@@ -70,11 +70,11 @@ export default function Home() {
           <div className="mb-8 flex justify-center">
             <div className="relative">
               <Image 
-                src="/braze-logo.svg" 
+                src="/braze-logo.png" 
                 alt="Powered by Braze" 
-                width={240}
-                height={80}
-                className="h-16 w-auto object-contain drop-shadow-lg"
+                width={300}
+                height={100}
+                className="h-20 w-auto object-contain drop-shadow-lg"
                 priority
               />
             </div>
