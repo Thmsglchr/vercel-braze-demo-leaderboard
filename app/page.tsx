@@ -213,9 +213,9 @@ export default function Home() {
             <Image 
               src="/powered-by-braze-logo.png" 
               alt="Powered by Braze" 
-              width={180}
-              height={54}
-              className="h-[54px] w-auto object-contain mx-auto opacity-80 hover:opacity-100 transition-opacity"
+              width={200}
+              height={60}
+              className="h-[60px] w-auto object-contain mx-auto opacity-80 hover:opacity-100 transition-opacity"
             />
           </div>
         </div>
