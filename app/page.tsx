@@ -24,13 +24,13 @@ export default function Home() {
       
       if (data.success) {
         setLeaderboard(data.data);
-        setLastUpdate(new Date().toLocaleTimeString('fr-FR'));
+        setLastUpdate(new Date().toLocaleTimeString('en-US'));
         setError(null);
       } else {
-        setError(data.message || 'Erreur lors du chargement');
+        setError(data.message || 'Error loading leaderboard');
       }
     } catch (err) {
-      setError('Impossible de charger le leaderboard');
+      setError('Unable to load leaderboard');
       console.error(err);
     } finally {
       setLoading(false);
@@ -40,8 +40,8 @@ export default function Home() {
   useEffect(() => {
     fetchLeaderboard();
     
-    // Auto-refresh toutes les 30 secondes
-    const interval = setInterval(fetchLeaderboard, 30000);
+    // Auto-refresh every 5 seconds for real-time updates
+    const interval = setInterval(fetchLeaderboard, 5000);
     
     return () => clearInterval(interval);
   }, []);
@@ -54,30 +54,39 @@ export default function Home() {
   };
 
   const getRankColor = (rank: number) => {
-    if (rank === 1) return 'text-yellow-400';
-    if (rank === 2) return 'text-gray-300';
-    if (rank === 3) return 'text-amber-600';
-    return 'text-gray-400';
+    if (rank === 1) return 'text-[#FFA524]';
+    if (rank === 2) return 'text-white';
+    if (rank === 3) return 'text-[#FFA4FB]';
+    return 'text-white/60';
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
+    <div className="min-h-screen bg-gradient-to-br from-[#300266] via-[#801ED7] to-[#300266]">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
-            🔥 Braze Demo
-          </h1>
-          <h2 className="text-3xl md:text-4xl font-semibold text-blue-200 mb-2">
-            Real-time Leaderboard
-          </h2>
-          <p className="text-gray-300">
-            Powered by Braze Webhooks
-          </p>
-          {lastUpdate && (
-            <p className="text-sm text-gray-400 mt-2">
-              Last update: {lastUpdate}
+          {/* Logo placeholder - add braze-logo.png to /public/ folder */}
+          <div className="mb-6 flex justify-center">
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-8 py-4 inline-block border border-white/20">
+              <h1 className="text-4xl md:text-5xl font-bold text-white">
+                Real-time Leaderboard
+              </h1>
+            </div>
+          </div>
+          
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <div className="h-1 w-12 bg-gradient-to-r from-transparent via-[#FFA524] to-transparent rounded-full"></div>
+            <p className="text-[#FFA4FB] text-lg font-medium">
+              Powered by Braze Webhooks
             </p>
+            <div className="h-1 w-12 bg-gradient-to-r from-transparent via-[#FFA524] to-transparent rounded-full"></div>
+          </div>
+          
+          {lastUpdate && (
+            <div className="flex items-center justify-center gap-2 text-sm text-white/60 mt-4">
+              <div className="w-2 h-2 bg-[#FFA524] rounded-full animate-pulse"></div>
+              <p>Live • Last update: {lastUpdate}</p>
+            </div>
           )}
         </div>
 
@@ -88,22 +97,22 @@ export default function Home() {
               <div className="animate-pulse">Loading...</div>
             </div>
           ) : error ? (
-            <div className="bg-red-900/50 border border-red-500 rounded-lg p-6 text-center">
+            <div className="bg-red-900/50 border-2 border-red-500 rounded-2xl p-6 text-center backdrop-blur-sm">
               <p className="text-red-200 text-lg mb-2">❌ Error</p>
               <p className="text-red-300">{error}</p>
               <button 
                 onClick={fetchLeaderboard}
-                className="mt-4 px-6 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition"
+                className="mt-4 px-6 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition-all text-white font-semibold"
               >
                 Retry
               </button>
             </div>
           ) : leaderboard.length === 0 ? (
-            <div className="bg-blue-900/30 border border-blue-500 rounded-lg p-8 text-center">
-              <p className="text-blue-200 text-xl">
+            <div className="bg-white/5 border-2 border-[#FFA4FB]/30 rounded-2xl p-8 text-center backdrop-blur-sm">
+              <p className="text-[#FFA4FB] text-xl mb-2">
                 🎮 No scores yet
               </p>
-              <p className="text-gray-400 mt-2">
+              <p className="text-white/60 mt-2">
                 Leaderboard will automatically populate via Braze webhooks
               </p>
             </div>
@@ -113,36 +122,36 @@ export default function Home() {
                 <div
                   key={entry.user_id}
                   className={`
-                    bg-white/10 backdrop-blur-sm rounded-xl p-4 
-                    border-2 transition-all duration-300 hover:scale-[1.02]
+                    backdrop-blur-sm rounded-2xl p-5 
+                    border-2 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl
                     ${entry.rank <= 3 
-                      ? 'border-yellow-400 bg-yellow-400/10 shadow-lg shadow-yellow-400/20' 
-                      : 'border-blue-400/30 hover:border-blue-400/50'
+                      ? 'border-[#FFA524] bg-gradient-to-r from-[#FFA524]/20 to-[#FFA4FB]/20 shadow-lg shadow-[#FFA524]/30' 
+                      : 'border-white/20 bg-white/5 hover:border-[#801ED7]/50 hover:bg-white/10'
                     }
                   `}
                 >
                   <div className="flex items-center justify-between">
                     {/* Rank + Name */}
                     <div className="flex items-center gap-4 flex-1">
-                      <div className={`text-3xl font-bold w-12 text-center ${getRankColor(entry.rank)}`}>
+                      <div className={`text-3xl font-bold w-14 text-center ${getRankColor(entry.rank)}`}>
                         {getMedalEmoji(entry.rank) || `#${entry.rank}`}
                       </div>
                       <div className="flex-1">
-                        <p className="text-white text-xl font-semibold truncate">
+                        <p className="text-white text-xl font-bold truncate">
                           {entry.username}
                         </p>
-                        <p className="text-gray-400 text-sm">
-                          {new Date(entry.updated_at).toLocaleDateString('fr-FR')}
+                        <p className="text-white/50 text-sm">
+                          {new Date(entry.updated_at).toLocaleDateString('en-US')}
                         </p>
                       </div>
                     </div>
 
                     {/* Score */}
                     <div className="text-right">
-                      <p className={`text-3xl font-bold ${entry.rank <= 3 ? 'text-yellow-300' : 'text-blue-300'}`}>
-                        {entry.score.toLocaleString('fr-FR')}
+                      <p className={`text-3xl font-bold ${entry.rank <= 3 ? 'text-[#FFA524]' : 'text-[#FFA4FB]'}`}>
+                        {entry.score.toLocaleString('en-US')}
                       </p>
-                      <p className="text-gray-400 text-sm">
+                      <p className="text-white/50 text-sm">
                         points
                       </p>
                     </div>
@@ -157,12 +166,20 @@ export default function Home() {
             <div className="text-center mt-8">
               <button
                 onClick={fetchLeaderboard}
-                className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-all hover:scale-105 shadow-lg"
+                className="px-8 py-3 bg-gradient-to-r from-[#801ED7] to-[#300266] hover:from-[#801ED7] hover:to-[#801ED7] text-white rounded-xl font-bold transition-all hover:scale-105 shadow-lg shadow-[#801ED7]/50 border border-white/20"
               >
-                🔄 Refresh
+                🔄 Refresh Now
               </button>
             </div>
           )}
+          
+          {/* Powered by Braze footer */}
+          <div className="text-center mt-12 pb-8">
+            <div className="inline-flex items-center gap-2 bg-white/5 backdrop-blur-sm px-6 py-3 rounded-full border border-white/10">
+              <span className="text-white/60 text-sm">Powered by</span>
+              <span className="text-[#FFA524] font-bold text-lg">Braze</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
