@@ -30,12 +30,18 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { user_id, external_id, username, score } = body;
+    const { user_id, external_id, username, first_name, last_name, score } = body;
+
+    // Construire le username : accepte soit 'username' direct, soit 'first_name + last_name'
+    let finalUsername = username;
+    if (!finalUsername && (first_name || last_name)) {
+      finalUsername = `${first_name || ''} ${last_name || ''}`.trim();
+    }
 
     // Validation des données
-    if (!username || score === undefined || score === null) {
+    if (!finalUsername || score === undefined || score === null) {
       return NextResponse.json(
-        { error: 'Missing required fields: username and score are required' },
+        { error: 'Missing required fields: username (or first_name/last_name) and score are required' },
         { status: 400 }
       );
     }
@@ -64,7 +70,7 @@ export async function POST(request: NextRequest) {
     // On utilise ON CONFLICT pour faire un UPSERT
     await sql`
       INSERT INTO leaderboard (user_id, username, score, updated_at)
-      VALUES (${userId}, ${username}, ${scoreValue}, NOW())
+      VALUES (${userId}, ${finalUsername}, ${scoreValue}, NOW())
       ON CONFLICT (user_id)
       DO UPDATE SET 
         username = EXCLUDED.username,
@@ -72,14 +78,14 @@ export async function POST(request: NextRequest) {
         updated_at = NOW()
     `;
 
-    console.log(`✅ Score updated for user ${username}: ${scoreValue}`);
+    console.log(`✅ Score updated for user ${finalUsername}: ${scoreValue}`);
 
     return NextResponse.json({
       success: true,
       message: 'Score updated successfully',
       data: {
         user_id: userId,
-        username,
+        username: finalUsername,
         score: scoreValue
       }
     });
@@ -104,7 +110,9 @@ export async function GET() {
     expectedPayload: {
       user_id: 'string',
       external_id: 'string (optional)',
-      username: 'string',
+      username: 'string OR first_name + last_name',
+      first_name: 'string (optional, combined with last_name)',
+      last_name: 'string (optional, combined with first_name)',
       score: 'number'
     }
   });
