@@ -8,7 +8,7 @@ For Braze SolCons
 ### Step 1: Create Quiz Landing Page
 • Create a Braze Landing Page with your quiz questions
 • Form submission triggers custom event: Quiz Answers Submitted
-• Pass all answers as event properties (question_1, question_2, etc.)
+• Pass all answers as custom attributes (question_1, question_2, etc.)
 
 Example: https://dashboard-02.braze.eu/engagement/landing_pages/69246958432ab82fe41e7329/6578c2dc0142c1004d49fd6a
 
@@ -16,7 +16,7 @@ Example: https://dashboard-02.braze.eu/engagement/landing_pages/69246958432ab82f
 
 ### Step 2: Canvas Entry Trigger
 • Trigger: Custom Event "Quiz Answers Submitted"
-• Capture all quiz answers as entry properties
+• Quiz answers stored as custom attributes on user profile
 
 ---
 
@@ -31,8 +31,8 @@ Correct answers:
 - question_2: answer_b
 
 User answers:
-- question_1: {{event_properties.${question_1}}}
-- question_2: {{event_properties.${question_2}}}
+- question_1: {{custom_attribute.${question_1}}}
+- question_2: {{custom_attribute.${question_2}}}
 
 Return only the numeric score."
 
@@ -92,7 +92,7 @@ Problem: Webhook fails (400 error)
 
 Problem: Score not calculated
 → Review Agent Console prompt
-→ Check event properties captured correctly
+→ Check custom attributes set correctly from landing page
 
 Problem: Leaderboard doesn't update
 → Hard refresh page (Ctrl+Shift+R)

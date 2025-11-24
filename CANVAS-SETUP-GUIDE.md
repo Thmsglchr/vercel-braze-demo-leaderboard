@@ -17,7 +17,7 @@ This Canvas creates an interactive quiz experience with real-time leaderboard up
 Create a Braze Landing Page with your quiz questions. Ensure:
 - Each question captures user's answer as a form field
 - Form submission triggers Canvas entry via custom event `Quiz Answers Submitted`
-- Pass all answers as event properties (e.g., `question_1`, `question_2`, etc.)
+- Pass all answers as custom attributes (e.g., `question_1`, `question_2`, etc.)
 
 **Example**: [Landing Page Template](https://dashboard-02.braze.eu/engagement/landing_pages/69246958432ab82fe41e7329/6578c2dc0142c1004d49fd6a)
 
@@ -27,7 +27,7 @@ Create a Braze Landing Page with your quiz questions. Ensure:
 
 **Entry Trigger**: Custom Event `Quiz Answers Submitted`
 
-**Entry Properties**: Capture all quiz answers from the landing page form.
+**Custom Attributes**: Quiz answers are stored as custom attributes on the user profile.
 
 ---
 
@@ -46,9 +46,9 @@ Correct answers:
 - question_3: "answer_c"
 
 User answers:
-- question_1: {{event_properties.${question_1}}}
-- question_2: {{event_properties.${question_2}}}
-- question_3: {{event_properties.${question_3}}}
+- question_1: {{custom_attribute.${question_1}}}
+- question_2: {{custom_attribute.${question_2}}}
+- question_3: {{custom_attribute.${question_3}}}
 
 Return only the numeric score.
 ```
@@ -147,7 +147,7 @@ Before each demo, clear previous entries:
 
 **Score not calculated correctly**:
 - Review Agent Console prompt
-- Verify event properties are captured from landing page
+- Verify custom attributes are set from landing page
 - Test Agent Console response independently
 
 **Leaderboard doesn't update**:

@@ -7,7 +7,7 @@ STEP 1: CREATE QUIZ LANDING PAGE
 
 Create a Braze Landing Page with quiz questions.
 Form submission triggers custom event: "Quiz Answers Submitted"
-Pass all answers as event properties (question_1, question_2, etc.)
+Pass all answers as custom attributes (question_1, question_2, etc.)
 
 Example:
 https://dashboard-02.braze.eu/engagement/landing_pages/69246958432ab82fe41e7329/6578c2dc0142c1004d49fd6a
@@ -17,7 +17,7 @@ https://dashboard-02.braze.eu/engagement/landing_pages/69246958432ab82fe41e7329/
 STEP 2: CANVAS ENTRY TRIGGER
 
 Trigger: Custom Event "Quiz Answers Submitted"
-Capture all quiz answers as entry properties
+Quiz answers stored as custom attributes on user profile
 
 ═══════════════════════════════════════════════════════
 
@@ -33,8 +33,8 @@ Correct answers:
 - question_2: answer_b
 
 User answers:
-- question_1: {{event_properties.${question_1}}}
-- question_2: {{event_properties.${question_2}}}
+- question_1: {{custom_attribute.${question_1}}}
+- question_2: {{custom_attribute.${question_2}}}
 
 Return only the numeric score."
 
@@ -107,7 +107,7 @@ TROUBLESHOOTING
 
 ❌ Score not calculated correctly
    → Review Agent Console prompt
-   → Check event properties captured from landing page
+   → Check custom attributes set correctly from landing page
    → Test Agent Console independently
 
 ❌ Leaderboard doesn't update
