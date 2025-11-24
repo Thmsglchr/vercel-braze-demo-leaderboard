@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 interface LeaderboardEntry {
   user_id: string;
@@ -65,8 +66,22 @@ export default function Home() {
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-12">
-          {/* Logo placeholder - add braze-logo.png to /public/ folder */}
-          <div className="mb-6 flex justify-center">
+          {/* Braze Logo */}
+          <div className="mb-8 flex justify-center">
+            <div className="relative">
+              <Image 
+                src="/braze-logo.png" 
+                alt="Powered by Braze" 
+                width={240}
+                height={80}
+                className="h-16 w-auto object-contain"
+                priority
+              />
+            </div>
+          </div>
+          
+          {/* Title */}
+          <div className="mb-6">
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-8 py-4 inline-block border border-white/20">
               <h1 className="text-4xl md:text-5xl font-bold text-white">
                 Real-time Leaderboard
@@ -77,7 +92,7 @@ export default function Home() {
           <div className="flex items-center justify-center gap-2 mb-4">
             <div className="h-1 w-12 bg-gradient-to-r from-transparent via-[#FFA524] to-transparent rounded-full"></div>
             <p className="text-[#FFA4FB] text-lg font-medium">
-              Powered by Braze Webhooks
+              Live Updates via Webhooks
             </p>
             <div className="h-1 w-12 bg-gradient-to-r from-transparent via-[#FFA524] to-transparent rounded-full"></div>
           </div>
