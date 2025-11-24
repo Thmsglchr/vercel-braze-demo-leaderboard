@@ -66,17 +66,17 @@ export default function Home() {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
-            🎢 Parc Astérix
+            🔥 Braze Demo
           </h1>
           <h2 className="text-3xl md:text-4xl font-semibold text-blue-200 mb-2">
-            Leaderboard
+            Real-time Leaderboard
           </h2>
           <p className="text-gray-300">
-            Classement des meilleurs scores
+            Powered by Braze Webhooks
           </p>
           {lastUpdate && (
             <p className="text-sm text-gray-400 mt-2">
-              Dernière mise à jour : {lastUpdate}
+              Last update: {lastUpdate}
             </p>
           )}
         </div>
@@ -85,26 +85,26 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           {loading && leaderboard.length === 0 ? (
             <div className="text-center text-white text-xl">
-              <div className="animate-pulse">Chargement...</div>
+              <div className="animate-pulse">Loading...</div>
             </div>
           ) : error ? (
             <div className="bg-red-900/50 border border-red-500 rounded-lg p-6 text-center">
-              <p className="text-red-200 text-lg mb-2">❌ Erreur</p>
+              <p className="text-red-200 text-lg mb-2">❌ Error</p>
               <p className="text-red-300">{error}</p>
               <button 
                 onClick={fetchLeaderboard}
                 className="mt-4 px-6 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition"
               >
-                Réessayer
+                Retry
               </button>
             </div>
           ) : leaderboard.length === 0 ? (
             <div className="bg-blue-900/30 border border-blue-500 rounded-lg p-8 text-center">
               <p className="text-blue-200 text-xl">
-                🎮 Aucun score pour le moment
+                🎮 No scores yet
               </p>
               <p className="text-gray-400 mt-2">
-                Le leaderboard se remplira automatiquement via Braze
+                Leaderboard will automatically populate via Braze webhooks
               </p>
             </div>
           ) : (
@@ -159,7 +159,7 @@ export default function Home() {
                 onClick={fetchLeaderboard}
                 className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-all hover:scale-105 shadow-lg"
               >
-                🔄 Rafraîchir
+                🔄 Refresh
               </button>
             </div>
           )}

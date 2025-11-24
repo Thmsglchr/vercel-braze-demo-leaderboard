@@ -23,12 +23,12 @@ COMMENT ON COLUMN leaderboard.score IS 'Score de l''utilisateur';
 COMMENT ON COLUMN leaderboard.updated_at IS 'Date de dernière mise à jour du score';
 COMMENT ON COLUMN leaderboard.created_at IS 'Date de première insertion';
 
--- Données de test (optionnel - à supprimer en production)
+-- Test data (optional - remove in production)
 INSERT INTO leaderboard (user_id, username, score) VALUES
-  ('test_user_1', 'Obélix', 9500),
-  ('test_user_2', 'Astérix', 8750),
-  ('test_user_3', 'Panoramix', 7890),
-  ('test_user_4', 'Idéfix', 6543),
-  ('test_user_5', 'Abraracourcix', 5432)
+  ('demo_user_1', 'Alex Thompson', 9500),
+  ('demo_user_2', 'Jordan Smith', 8750),
+  ('demo_user_3', 'Taylor Martinez', 7890),
+  ('demo_user_4', 'Morgan Lee', 6543),
+  ('demo_user_5', 'Casey Brown', 5432)
 ON CONFLICT (user_id) DO NOTHING;
 

@@ -1,6 +1,6 @@
-# 🎢 Parc Astérix - Leaderboard Braze
+# 🔥 Braze Demo - Real-time Leaderboard
 
-Application Next.js qui reçoit les scores via webhooks Braze et affiche un leaderboard en temps réel.
+Next.js application that receives scores via Braze webhooks and displays a real-time leaderboard.
 
 ## 🏗️ Architecture
 
@@ -306,5 +306,5 @@ Pour toute question, vérifie :
 
 ---
 
-Made with 💜 for Parc Astérix
+Made with 💜 powered by Braze
 
