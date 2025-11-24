@@ -79,10 +79,8 @@ export default function Home() {
   };
 
   const getRankColor = (rank: number) => {
-    if (rank === 1) return 'text-[#FFA524]';
-    if (rank === 2) return 'text-white';
-    if (rank === 3) return 'text-[#FFA4FB]';
-    return 'text-white/60';
+    if (rank <= 3) return 'text-[#FFA524]';
+    return 'text-[#801ED7]';
   };
 
   return (
@@ -165,7 +163,7 @@ export default function Home() {
                     transition-all duration-300 hover:scale-[1.02]
                     ${entry.rank <= 3 
                       ? 'bg-white' 
-                      : 'bg-gradient-to-br from-white to-[#E6D5F6]'
+                      : 'bg-[#C9C4FF]'
                     }
                   `}
                 >
@@ -187,7 +185,7 @@ export default function Home() {
 
                     {/* Score */}
                     <div className="text-right">
-                      <p className="text-[#801ED7] text-3xl font-bold">
+                      <p className={`text-3xl font-bold ${entry.rank <= 3 ? 'text-[#FFA524]' : 'text-[#801ED7]'}`}>
                         {entry.score.toLocaleString('en-US')}
                       </p>
                       <p className="text-[#801ED7]/60 text-sm">
